@@ -2,9 +2,9 @@ import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { CoinInputProps } from "../model/CoinInput";
+import { denominations } from "../utils/denominations";
 
 export const CoinInput: React.FC<CoinInputProps> = ({ onInsert }) => {
-  const denominations: number[] = [0.25, 0.1, 0.05, 0.01];
   return (
     <StyledButton>
       <h2>Insert Coins</h2>
