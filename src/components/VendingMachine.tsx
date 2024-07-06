@@ -4,13 +4,15 @@ import { Col, Container, Row } from "react-bootstrap";
 import { ProductList } from "./ProductList";
 import { ProductProps } from "../model/Products";
 import { CoinInput } from "./CoinInput";
+import { ChangeSectionDisplay } from "./ChangeSectionDisplay";
 
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
   const [productState, setProductState] = useState<ProductProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
-    null,
+    null
   );
+  const [change, setChange] = useState<{ [key: number]: number }>({});
   const [coins, setCoins] = useState<number>(0);
 
   useEffect(() => {
@@ -40,6 +42,11 @@ export const VendingMachine: React.FC = () => {
       <Row>
         <Col>
           <CoinInput onInsert={insertCoin} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ChangeSectionDisplay change={change} />
         </Col>
       </Row>
     </Container>
