@@ -11,8 +11,6 @@ export const VendingMachine: React.FC = () => {
     null,
   );
 
-  console.log(products);
-
   useEffect(() => {
     if (products) {
       setProductState(products);
