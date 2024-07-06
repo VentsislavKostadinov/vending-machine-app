@@ -6,6 +6,7 @@ import { ProductProps } from "../model/Products";
 import { CoinInput } from "./CoinInput";
 import { ChangeSectionDisplay } from "./ChangeSectionDisplay";
 import { calculateChange } from "../utils/changeCalculator";
+import { ProductForm } from "./ProductForm";
 
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
@@ -90,6 +91,11 @@ export const VendingMachine: React.FC = () => {
       <Row>
         <Col>
           <ChangeSectionDisplay change={change} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ProductForm products={productState} setProducts={setProductState} />
         </Col>
       </Row>
     </Container>
