@@ -3,6 +3,7 @@ import { useFetchProducts } from "../hooks/useFetchProducts";
 import { Col, Container, Row } from "react-bootstrap";
 import { ProductList } from "./ProductList";
 import { ProductProps } from "../model/Products";
+import { CoinInput } from "./CoinInput";
 
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
@@ -10,6 +11,7 @@ export const VendingMachine: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
     null,
   );
+  const [coins, setCoins] = useState<number>(0);
 
   useEffect(() => {
     if (products) {
@@ -21,6 +23,10 @@ export const VendingMachine: React.FC = () => {
     setSelectedProduct(product);
   };
 
+  const insertCoin = (value: number) => {
+    setCoins(coins + value);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading products</p>;
 
@@ -29,6 +35,11 @@ export const VendingMachine: React.FC = () => {
       <Row>
         <Col>
           <ProductList products={productState} onSelect={selectProduct} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <CoinInput onInsert={insertCoin} />
         </Col>
       </Row>
     </Container>
