@@ -7,6 +7,8 @@ import { CoinInput } from "./CoinInput";
 import { ChangeSectionDisplay } from "./ChangeSectionDisplay";
 import { calculateChange } from "../utils/changeCalculator";
 import { ProductForm } from "./ProductForm";
+import { ErrorHandling } from "../common/ErrorHandling";
+import { LoadingHandling } from "../common/LoadingHandling";
 
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
@@ -63,8 +65,10 @@ export const VendingMachine: React.FC = () => {
     setSelectedProduct(null);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading products</p>;
+  if (loading) return <LoadingHandling />;
+  if (error) return   <ErrorHandling />
+
+  
 
   return (
     <Container>
