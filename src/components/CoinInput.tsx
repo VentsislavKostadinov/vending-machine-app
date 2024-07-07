@@ -1,26 +1,35 @@
 import React from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
-import styled from "styled-components";
+import { ButtonGroup } from "react-bootstrap";
 import { CoinInputProps } from "../model/CoinInput";
 import { denominations } from "../utils/denominations";
+import { StyledButton, FlashingText, StyledCircleButton } from "../common/styled-components/StyledCoinInput";
 
-export const CoinInput: React.FC<CoinInputProps> = ({ onInsert }) => {
+export const CoinInput: React.FC<CoinInputProps> = ({ onInsert, coins }) => {
   return (
+    <>
     <StyledButton>
-      <h2>Insert Coins</h2>
+      <FlashingText>Insert Coins</FlashingText>
       <ButtonGroup>
         {denominations.map((denomination) => (
-          <Button key={denomination} onClick={() => onInsert(denomination)}>
+          <StyledCircleButton
+            key={denomination}
+            variant="warning"
+            onClick={() => onInsert(denomination)}
+          >
             {denomination.toFixed(2)}
-          </Button>
+          </StyledCircleButton>
         ))}
       </ButtonGroup>
     </StyledButton>
+
+    <div>
+      <br />
+      <br />
+      <h6>Inserted coins</h6>
+      <p>${coins.toFixed(2)}</p>
+    </div>
+    </>
   );
 };
 
-const StyledButton = styled.div`
-  .btn-primary {
-    margin: 0.25rem;
-  }
-`;
+

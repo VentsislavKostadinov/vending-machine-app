@@ -16,6 +16,9 @@ export const VendingMachine: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
     null
   );
+  const [resetSelectedProductId, setResetSelectedProductId] = useState<number | null>(
+    null
+  );
   const [change, setChange] = useState<{ [key: number]: number }>({});
   const [coins, setCoins] = useState<number>(0);
 
@@ -27,6 +30,7 @@ export const VendingMachine: React.FC = () => {
 
   const selectProduct = (product: ProductProps) => {
     setSelectedProduct(product);
+    setResetSelectedProductId(product.id);
   };
 
   const insertCoin = (value: number) => {
@@ -50,6 +54,8 @@ export const VendingMachine: React.FC = () => {
         );
         setCoins(0);
         setSelectedProduct(null);
+        resetSelectedProduct();
+        setResetSelectedProductId(null);
         console.log("Product bought successfully");
       } else {
         console.log("Not enough coins");
@@ -59,27 +65,32 @@ export const VendingMachine: React.FC = () => {
     }
   };
 
-  const reset = () => {
-    setChange(calculateChange(coins, [0.25, 0.1, 0.05, 0.01]));
-    setCoins(0);
+  const resetSelectedProduct = () => {
     setSelectedProduct(null);
   };
 
-  if (loading) return <LoadingHandling />;
-  if (error) return   <ErrorHandling />
+  const reset = () => {
+    setChange(calculateChange(coins, [0.25, 0.1, 0.05, 0.01]));
+    setCoins(0);
+    resetSelectedProduct();
+  };
 
-  
+  if (loading) return <LoadingHandling />;
+  if (error) return <ErrorHandling />;
 
   return (
     <Container>
       <Row>
-        <Col>
-          <ProductList products={productState} onSelect={selectProduct} />
+        <Col md={10}>
+          <ProductList
+            products={productState}
+            onSelect={selectProduct}
+            selectedProductId={resetSelectedProductId}
+            resetSelectedProduct={resetSelectedProduct}
+          />
         </Col>
-      </Row>
-      <Row>
-        <Col>
-          <CoinInput onInsert={insertCoin} />
+        <Col md={2}>
+          <CoinInput onInsert={insertCoin} coins={coins} />
         </Col>
       </Row>
       <Row>
