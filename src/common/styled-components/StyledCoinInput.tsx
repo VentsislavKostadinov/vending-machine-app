@@ -25,7 +25,9 @@ export const FlashingText = styled.h4`
   animation: ${flash} 1s infinite;
 `;
 
-export const StyledCircleButton = styled(({ ...props }) => <Button {...props} />)`
+export const StyledCircleButton = styled(({ ...props }) => (
+  <Button {...props} />
+))`
   width: 50px;
   height: 50px;
   border: 5px solid #ffff33;
