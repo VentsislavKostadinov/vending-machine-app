@@ -4,13 +4,13 @@ import { UpdateProductButtonProps } from "../model/UpdateProductButton";
 
 export const UpdateProductButton: React.FC<UpdateProductButtonProps> = ({
   updateProduct,
-  productId
+  productId,
 }) => {
 
-    const handleUpdate = () => {
-        updateProduct(productId);
-      };
-    
+  const handleUpdate = () => {
+    updateProduct(productId);
+  };
+
   return (
     <Button
       variant="warning"
