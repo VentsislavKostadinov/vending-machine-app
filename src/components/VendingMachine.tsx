@@ -70,8 +70,8 @@ export const VendingMachine: React.FC = () => {
 
   const resetSelectedProduct = () => {
     setSelectedProduct(null);
-    setEditProduct(null); // Clear edit product state as well
-    setResetFlag(true); // Signal reset
+    setEditProduct(null);
+    setResetFlag(true);
   };
 
   const reset = () => {
@@ -92,8 +92,8 @@ export const VendingMachine: React.FC = () => {
             onSelect={selectProduct}
             onEdit={editProductHandler}
             selectedProductId={resetSelectedProductId}
-            resetFlag={resetFlag} // Pass reset flag
-            clearResetFlag={() => setResetFlag(false)} // Pass function to clear reset flag
+            resetFlag={resetFlag}
+            clearResetFlag={() => setResetFlag(false)}
             resetSelectedProduct={resetSelectedProduct}      />
         </Col>
         <Col md={2}>
