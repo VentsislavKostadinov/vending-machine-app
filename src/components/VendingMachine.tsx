@@ -13,14 +13,12 @@ import { LoadingHandling } from "../common/LoadingHandling";
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
   const [productState, setProductState] = useState<ProductProps[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(
-    null
-  );
-  const [resetSelectedProductId, setResetSelectedProductId] = useState<number | null>(
-    null
-  );
+  const [selectedProduct, setSelectedProduct] = useState<ProductProps | null>(null);
+  const [editProduct, setEditProduct] = useState<ProductProps | null>(null);
+  const [resetSelectedProductId, setResetSelectedProductId] = useState<number | null>(null);
   const [change, setChange] = useState<{ [key: number]: number }>({});
   const [coins, setCoins] = useState<number>(0);
+  const [resetFlag, setResetFlag] = useState<boolean>(false);
 
   useEffect(() => {
     if (products) {
@@ -30,6 +28,11 @@ export const VendingMachine: React.FC = () => {
 
   const selectProduct = (product: ProductProps) => {
     setSelectedProduct(product);
+    setResetSelectedProductId(product.id);
+  };
+
+  const editProductHandler = (product: ProductProps) => {
+    setEditProduct(product);
     setResetSelectedProductId(product.id);
   };
 
@@ -67,6 +70,8 @@ export const VendingMachine: React.FC = () => {
 
   const resetSelectedProduct = () => {
     setSelectedProduct(null);
+    setEditProduct(null);
+    setResetFlag(true);
   };
 
   const reset = () => {
@@ -85,9 +90,11 @@ export const VendingMachine: React.FC = () => {
           <ProductList
             products={productState}
             onSelect={selectProduct}
+            onEdit={editProductHandler}
             selectedProductId={resetSelectedProductId}
-            resetSelectedProduct={resetSelectedProduct}
-          />
+            resetFlag={resetFlag}
+            clearResetFlag={() => setResetFlag(false)}
+            resetSelectedProduct={resetSelectedProduct}      />
         </Col>
         <Col md={2}>
           <CoinInput onInsert={insertCoin} coins={coins} />
@@ -110,7 +117,12 @@ export const VendingMachine: React.FC = () => {
       </Row>
       <Row>
         <Col>
-          <ProductForm products={productState} setProducts={setProductState} />
+          <ProductForm
+            products={productState}
+            setProducts={setProductState}
+            selectedProduct={editProduct}
+            resetSelectedProduct={resetSelectedProduct}
+          />
         </Col>
       </Row>
     </Container>

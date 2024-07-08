@@ -1,37 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProductProps } from "../model/Products";
 import { Form, Col, Row, InputGroup } from "react-bootstrap";
 import { ProductFormProps } from "../model/AddProductForm";
 import { AddProductButton } from "../common/AddProductButton";
 import { UpdateProductButton } from "../common/UpdateProductButton";
 import { DeleteProductDropdown } from "../common/DeleteProductDropdown";
+import { StyledForm } from "../common/styled-components/StyledForm";
 
 export const ProductForm: React.FC<ProductFormProps> = ({
   products,
   setProducts,
+  selectedProduct,
+  resetSelectedProduct,
 }) => {
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
-  const [quantity, setQuantity] = useState<string>("");
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    quantity: "",
+  });
+
+  useEffect(() => {
+    if (selectedProduct) {
+      setFormData({
+        name: selectedProduct.name,
+        price: selectedProduct.price.toString(),
+        quantity: selectedProduct.quantity.toString(),
+      });
+    }
+  }, [selectedProduct]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const addProduct = () => {
-    const quantityValue = parseInt(quantity, 10);
+    const quantityValue = parseInt(formData.quantity, 10);
 
     if (quantityValue > 15) {
       alert("Quantity cannot exceed 15.");
       return;
     }
 
-    const existingProduct = products.find((product) => product.name === name);
-    if (existingProduct) {
+    if (products.some((product) => product.name === formData.name)) {
       alert("Product with this name already exists.");
       return;
     }
 
     const newProduct: ProductProps = {
       id: products.length + 1,
-      name,
-      price: parseFloat(price),
+      name: formData.name,
+      price: parseFloat(formData.price),
       quantity: quantityValue,
     };
 
@@ -40,7 +62,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   };
 
   const updateProduct = (id: number) => {
-    const quantityValue = parseInt(quantity, 10);
+    const quantityValue = parseInt(formData.quantity, 10);
 
     if (quantityValue > 15) {
       alert("Quantity cannot exceed 15.");
@@ -52,20 +74,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         product.id === id
           ? {
               ...product,
-              name,
-              price: parseFloat(price),
+              name: formData.name,
+              price: parseFloat(formData.price),
               quantity: quantityValue,
             }
           : product
       )
     );
     resetInputFields();
+    resetSelectedProduct();
   };
 
   const resetInputFields = () => {
-    setName("");
-    setPrice("");
-    setQuantity("");
+    setFormData({
+      name: "",
+      price: "",
+      quantity: "",
+    });
   };
 
   const deleteProduct = (id: number) => {
@@ -74,69 +99,63 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   return (
     <div>
-      <Form>
+      <StyledForm>
         <Row>
           <Form.Group as={Col} controlId="formGridName">
-            <Form.Label />
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
+              name="name"
               placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleInputChange}
             />
           </Form.Group>
-
+        </Row>
+        <Row>
           <Form.Group as={Col} controlId="formGridPrice">
-            <Form.Label />
+            <Form.Label>Price</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
               <Form.Control
                 type="text"
+                name="price"
                 placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={formData.price}
+                onChange={handleInputChange}
               />
             </InputGroup>
           </Form.Group>
-
+        </Row>
+        <Row>
           <Form.Group as={Col} controlId="formGridQuantity">
-            <Form.Label />
+            <Form.Label>Quantity</Form.Label>
             <Form.Control
               type="text"
+              name="quantity"
               placeholder="Quantity"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              value={formData.quantity}
+              onChange={handleInputChange}
             />
           </Form.Group>
         </Row>
         <Row>
           <Col>
-            <AddProductButton addProduct={addProduct} />
-            <UpdateProductButton
-              updateProduct={updateProduct}
-              productId={products.length}
-            />
+            {selectedProduct ? (
+              <UpdateProductButton
+                updateProduct={() => updateProduct(selectedProduct.id)}
+                productId={selectedProduct.id}
+              />
+            ) : (
+              <AddProductButton addProduct={addProduct} />
+            )}
           </Col>
         </Row>
-      </Form>
+      </StyledForm>
       <DeleteProductDropdown
         products={products}
         deleteProduct={deleteProduct}
       />
-      {/*  <h2>Delete Product</h2>
-      <Form.Group controlId="formGridDelete">
-        <Form.Control
-          as="select"
-          onChange={(e) => deleteProduct(Number(e.target.value))}
-        >
-          <option value="">Select a product to delete</option>
-          {products.map((product) => (
-            <option key={product.id} value={product.id}>
-              {product.name}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group> */}
     </div>
   );
 };
