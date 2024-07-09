@@ -6,7 +6,6 @@ import { StyledButton, FlashingText, StyledCircleButton } from "../common/styled
 
 export const CoinInput: React.FC<CoinInputProps> = ({ onInsert, coins }) => {
   return (
-    <>
     <StyledButton>
       <FlashingText>Insert Coins</FlashingText>
       <ButtonGroup>
@@ -21,14 +20,6 @@ export const CoinInput: React.FC<CoinInputProps> = ({ onInsert, coins }) => {
         ))}
       </ButtonGroup>
     </StyledButton>
-
-    <div>
-      <br />
-      <br />
-      <h6>Inserted coins</h6>
-      <p>${coins.toFixed(2)}</p>
-    </div>
-    </>
   );
 };
 

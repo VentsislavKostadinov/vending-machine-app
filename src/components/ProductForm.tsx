@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ProductProps } from "../model/Products";
-import { Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Form, Col, InputGroup } from "react-bootstrap";
 import { ProductFormProps } from "../model/AddProductForm";
 import { AddProductButton } from "../common/AddProductButton";
 import { UpdateProductButton } from "../common/UpdateProductButton";
-import { DeleteProductDropdown } from "../common/DeleteProductDropdown";
 import { StyledForm } from "../common/styled-components/StyledForm";
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -93,69 +92,53 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
   };
 
-  const deleteProduct = (id: number) => {
-    setProducts(products.filter((product) => product.id !== id));
-  };
-
   return (
     <div>
       <StyledForm>
-        <Row>
-          <Form.Group as={Col} controlId="formGridName">
-            <Form.Label>Name</Form.Label>
+        <Form.Group as={Col} controlId="formGridName">
+          <Form.Label />
+          <Form.Control
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formGridPrice">
+          <Form.Label />
+          <InputGroup>
+            <InputGroup.Text>$</InputGroup.Text>
             <Form.Control
               type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
+              name="price"
+              placeholder="Price"
+              value={formData.price}
               onChange={handleInputChange}
             />
-          </Form.Group>
-        </Row>
-        <Row>
-          <Form.Group as={Col} controlId="formGridPrice">
-            <Form.Label>Price</Form.Label>
-            <InputGroup>
-              <InputGroup.Text>$</InputGroup.Text>
-              <Form.Control
-                type="text"
-                name="price"
-                placeholder="Price"
-                value={formData.price}
-                onChange={handleInputChange}
-              />
-            </InputGroup>
-          </Form.Group>
-        </Row>
-        <Row>
-          <Form.Group as={Col} controlId="formGridQuantity">
-            <Form.Label>Quantity</Form.Label>
-            <Form.Control
-              type="text"
-              name="quantity"
-              placeholder="Quantity"
-              value={formData.quantity}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-        </Row>
-        <Row>
-          <Col>
-            {selectedProduct ? (
-              <UpdateProductButton
-                updateProduct={() => updateProduct(selectedProduct.id)}
-                productId={selectedProduct.id}
-              />
-            ) : (
-              <AddProductButton addProduct={addProduct} />
-            )}
-          </Col>
-        </Row>
+          </InputGroup>
+        </Form.Group>
+        <Form.Group as={Col} controlId="formGridQuantity">
+          <Form.Label />
+          <Form.Control
+            type="text"
+            name="quantity"
+            placeholder="Quantity"
+            value={formData.quantity}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        {selectedProduct ? (
+          <UpdateProductButton
+            updateProduct={() => updateProduct(selectedProduct.id)}
+            productId={selectedProduct.id}
+          />
+        ) : (
+          <AddProductButton addProduct={addProduct} />
+        )}
       </StyledForm>
-      <DeleteProductDropdown
-        products={products}
-        deleteProduct={deleteProduct}
-      />
     </div>
   );
 };

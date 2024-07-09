@@ -6,12 +6,12 @@ export const ChangeSectionDisplay: React.FC<ChangeSectionDisplayProps> = ({
 }) => {
   return (
     <div>
+      <br />
+      <h6>Change</h6>
       {Object.entries(change)
         .filter(([_, amount]) => amount > 0)
         .map(([coin, amount]) => (
-          <h3
-            key={coin}
-          >{`Change: $${parseFloat(coin).toFixed(2)}: ${amount}`}</h3>
+          <h6 key={coin}>{`$${parseFloat(coin).toFixed(2)}: ${amount}`}</h6>
         ))}
     </div>
   );

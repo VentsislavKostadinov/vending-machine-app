@@ -10,6 +10,12 @@ export const StyledButton = styled.div`
     flex-direction: column;
     align-items: baseline;
   }
+
+  @media only screen and (max-width: 576px) {
+    .btn-group {
+      flex-direction: row;
+    }
+  }
 `;
 
 export const flash = keyframes`
@@ -25,7 +31,9 @@ export const FlashingText = styled.h4`
   animation: ${flash} 1s infinite;
 `;
 
-export const StyledCircleButton = styled(({ ...props }) => <Button {...props} />)`
+export const StyledCircleButton = styled(({ ...props }) => (
+  <Button {...props} />
+))`
   width: 50px;
   height: 50px;
   border: 5px solid #ffff33;
