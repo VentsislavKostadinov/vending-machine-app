@@ -4,7 +4,7 @@ import { CoinInputProps } from "../model/CoinInput";
 import { denominations } from "../utils/denominations";
 import { StyledButton, FlashingText, StyledCircleButton } from "../common/styled-components/StyledCoinInput";
 
-export const CoinInput: React.FC<CoinInputProps> = ({ onInsert, coins }) => {
+export const CoinInput: React.FC<CoinInputProps> = ({ onInsert }) => {
   return (
     <StyledButton>
       <FlashingText>Insert Coins</FlashingText>
