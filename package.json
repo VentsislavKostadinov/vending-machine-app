@@ -45,6 +45,28 @@
     ]
   },
   "devDependencies": {
-    "axios-hooks": "^5.0.2"
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "axios-hooks": "^5.0.2",
+    "babel-jest": "^29.7.0",
+    "jest": "^27.5.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/*.test.{ts,tsx}",
+      "!**/*.spec.{ts,tsx}",
+      "!**/coverage/**",
+      "!**/public/**",
+      "!**/model/**",
+      "!**/build/**",
+      "!**/dist/**",
+      "!**/react-app-env.d.ts"
+    ],
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }

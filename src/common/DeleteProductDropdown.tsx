@@ -12,13 +12,16 @@ export const DeleteProductDropdown: React.FC<DeleteProductDropdownProps> = ({
       <h2>Delete Product</h2>
       <Form.Group controlId="formGridDelete">
         <Form.Control
+          data-testid="delete-product-dropdown"
           as="select"
           onChange={(e) => {
             const value = Number(e.target.value);
             if (value) deleteProduct(value);
           }}
         >
-          <option value="">Select a product to delete</option>
+          <option value="delete-product-dropdown">
+            Select a product to delete
+          </option>
           {products.map((product) => (
             <option key={product.id} value={product.id}>
               {product.name}
