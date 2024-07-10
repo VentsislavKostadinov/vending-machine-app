@@ -2,14 +2,9 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { VendingMachine } from "./VendingMachine";
 import { useFetchProducts } from "../hooks/useFetchProducts";
-import { ProductProps } from "../model/Products";
+import { mockProducts } from "../test-utils/products";
 
 jest.mock("../hooks/useFetchProducts");
-
-const mockProducts: ProductProps[] = [
-  { id: 1, name: "Soda", price: 1.25, quantity: 10 },
-  { id: 2, name: "Chips", price: 1.0, quantity: 5 },
-];
 
 describe("VendingMachine Component", () => {
   beforeEach(() => {
