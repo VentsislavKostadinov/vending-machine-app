@@ -12,7 +12,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   selectedProduct,
   resetSelectedProduct,
 }) => {
-  const [formData, setFormData] = useState({
+  let [formData, setFormData] = useState({
     name: "",
     price: "",
     quantity: "",

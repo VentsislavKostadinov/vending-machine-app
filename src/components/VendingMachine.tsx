@@ -15,14 +15,14 @@ import { StyledContainer } from "../common/styled-components/StyledContainer";
 
 export const VendingMachine: React.FC = () => {
   const { data: products, loading, error } = useFetchProducts();
-  const [productState, setProductState] = useState<ProductProps[]>([]);
-  const [editProduct, setEditProduct] = useState<ProductProps | null>(null);
-  const [resetSelectedProductId, setResetSelectedProductId] = useState<
+  let [productState, setProductState] = useState<ProductProps[]>([]);
+  let [editProduct, setEditProduct] = useState<ProductProps | null>(null);
+  let [resetSelectedProductId, setResetSelectedProductId] = useState<
     number | null
   >(null);
-  const [change, setChange] = useState<{ [key: number]: number }>({});
-  const [coins, setCoins] = useState<number>(0);
-  const [resetFlag, setResetFlag] = useState<boolean>(false);
+  let [change, setChange] = useState<{ [key: number]: number }>({});
+  let [coins, setCoins] = useState<number>(0);
+  let [resetFlag, setResetFlag] = useState<boolean>(false);
 
   useEffect(() => {
     if (products) {

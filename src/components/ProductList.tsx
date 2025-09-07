@@ -14,10 +14,10 @@ export const ProductList: React.FC<ProductListProps> = ({
   resetFlag,
   clearResetFlag,
 }) => {
-  const [localSelectedProductId, setLocalSelectedProductId] = useState<
+  let [localSelectedProductId, setLocalSelectedProductId] = useState<
     number | null
   >(null);
-  const [editingProductId, setEditingProductId] = useState<number | null>(null);
+  let [editingProductId, setEditingProductId] = useState<number | null>(null);
 
   useEffect(() => {
     setLocalSelectedProductId(selectedProductId);
