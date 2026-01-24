@@ -25,7 +25,7 @@ export const VendingMachine: React.FC = () => {
   const [resetFlag, setResetFlag] = useState<boolean>(false);
 
   useEffect(() => {
-    if (products) {
+    if (products && products.length > 0) {
       setProductState(products);
     }
   }, [products]);
