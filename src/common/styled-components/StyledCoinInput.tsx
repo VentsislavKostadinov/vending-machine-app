@@ -10,12 +10,6 @@ export const StyledButton = styled.div`
     flex-direction: column;
     align-items: baseline;
   }
-
-  @media only screen and (max-width: 576px) {
-    .btn-group {
-      flex-direction: row;
-    }
-  }
 `;
 
 export const flash = keyframes`
