@@ -22,9 +22,9 @@ const moveAndRotateCoin = keyframes`
   }
 `;
 
-const AnimatedCircleButton = styled(StyledCircleButton)<{ animate: boolean }>`
-  ${({ animate }) =>
-    animate &&
+const AnimatedCircleButton = styled(StyledCircleButton)<{ $animate: boolean }>`
+  ${({ $animate }) =>
+    $animate &&
     css`
       animation: ${moveAndRotateCoin} 0.5s ease forwards;
     `}
@@ -52,7 +52,7 @@ export const CoinInput: React.FC<CoinInputProps> = ({ onInsert, coins }) => {
               key={denomination}
               variant="warning"
               onClick={() => handleInsert(denomination, index)}
-              animate={animateIndex === index}
+              $animate={animateIndex === index}
             >
               {denomination.toFixed(2)}
             </AnimatedCircleButton>
