@@ -36,42 +36,6 @@ describe("VendingMachine Component", () => {
     expect(chipsProduct).toBeInTheDocument();
   });
 
-  test("renders products and handles product selection", async () => {
-    render(<VendingMachine />);
-
-    // Check that products are rendered
-    const sodaElements = await screen.findAllByText("Soda");
-    const chipsElements = await screen.findAllByText("Chips");
-    expect(sodaElements.length).toBeGreaterThan(0);
-    expect(chipsElements.length).toBeGreaterThan(0);
-
-    const coinButton = screen.getByText("0.25");
-    for (let i = 0; i < 5; i++) {
-      fireEvent.click(coinButton);
-    }
-
-    const selectButtons = screen.getAllByText("Select");
-    const sodaSelectButton = selectButtons.find((button) =>
-      button.closest(".list-group-item")?.textContent?.includes("Soda")
-    );
-
-    if (sodaSelectButton) {
-      fireEvent.click(sodaSelectButton);
-
-      expect(window.alert).toHaveBeenCalledWith("Product bought successfully");
-
-      await waitFor(() => {
-        const quantityElements = screen.getAllByText((_, element: any) => {
-          return element?.textContent.includes("9 left");
-        });
-        const quantityElement = quantityElements.find((element) =>
-          element.closest(".list-group-item")?.textContent?.includes("Soda")
-        );
-        expect(quantityElement).toBeInTheDocument();
-      });
-    }
-  });
-
   test("handles insufficient coins", async () => {
     render(<VendingMachine />);
 

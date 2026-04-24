@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { CoinInput } from "./CoinInput";
 import { CoinInputProps } from "../model/CoinInput";
 import { denominations } from "../utils/denominations";
@@ -18,6 +18,12 @@ describe("CoinInput Component", () => {
 
   beforeEach(() => {
     mockOnInsert.mockClear();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it("should render the Insert Coins headline", () => {
@@ -35,8 +41,12 @@ describe("CoinInput Component", () => {
   it("should call onInsert with the correct denomination when a button is clicked", () => {
     renderComponent();
     denominations.forEach((denomination) => {
+      mockOnInsert.mockClear();
       const button = screen.getByText(denomination.toFixed(2));
       fireEvent.click(button);
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
       expect(mockOnInsert).toHaveBeenCalledWith(denomination);
     });
   });
@@ -46,6 +56,9 @@ describe("CoinInput Component", () => {
     denominations.forEach((denomination) => {
       const button = screen.getByText(denomination.toFixed(2));
       fireEvent.click(button);
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
     });
     expect(mockOnInsert).toHaveBeenCalledTimes(denominations.length);
   });

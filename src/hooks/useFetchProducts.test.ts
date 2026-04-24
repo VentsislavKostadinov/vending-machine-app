@@ -5,11 +5,12 @@ import { mockProducts } from "../test-utils/products";
 
 jest.mock("axios-hooks");
 
-describe("useFetchProducts custom hooh", () => {
+describe("useFetchProducts custom hook", () => {
   it("should return data if successful", async () => {
     //@ts-ignore
     (useAxios as jest.Mock).mockReturnValue([
       { data: mockProducts, loading: false, error: null },
+      jest.fn(),
     ]);
 
     const { result } = renderHook(() => useFetchProducts());
@@ -23,6 +24,7 @@ describe("useFetchProducts custom hooh", () => {
     //@ts-ignore
     (useAxios as jest.Mock).mockReturnValue([
       { data: null, loading: true, error: null },
+      jest.fn(),
     ]);
 
     const { result } = renderHook(() => useFetchProducts());
@@ -37,6 +39,7 @@ describe("useFetchProducts custom hooh", () => {
     //@ts-ignore
     (useAxios as jest.Mock).mockReturnValue([
       { data: null, loading: false, error: mockError },
+      jest.fn(),
     ]);
 
     const { result } = renderHook(() => useFetchProducts());
